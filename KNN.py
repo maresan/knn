@@ -40,14 +40,14 @@ def obtenerVecinos(distancias, k):
     return vecinos
 
 def generarPrediccion(vecinos):
-    classVotes = {}
+    aux = {}
     for i in range(len(vecinos)):
         prediccion = vecinos[i][-1]
-        if prediccion in classVotes:
-            classVotes[prediccion] = classVotes[prediccion] + 1
+        if prediccion in aux:
+            aux[prediccion] = aux[prediccion] + 1
         else:
-            classVotes[prediccion] = 1
-    sorteo = sorted(classVotes.iteritems(), key=operator.itemgetter(1), reverse=True)
+            aux[prediccion] = 1
+    sorteo = sorted(aux.iteritems(), key=operator.itemgetter(1), reverse=True)
     return sorteo[0][0]
  
 def calcularPorcentaje(pruebas, predicciones):
@@ -55,14 +55,15 @@ def calcularPorcentaje(pruebas, predicciones):
     for i in range(len(pruebas)):
         if pruebas[i][-1] == predicciones[i]:
             correcta += 1
-    return (correcta/float(len(pruebas))) * 100.0
+    aux = float(len(pruebas))
+    return (correcta/aux) * 100.0
 
 #-----------------------------------------------------------------------------------------------------------------------
 #----------------------------------------- Menu Principal --------------------------------------------------------------
 #-----------------------------------------------------------------------------------------------------------------------
 
 predicciones=[]
-k = 3
+k = 1
 entrenamiento, pruebas  = cargarDatos("iris_dataset.csv")
 for i in range(len(pruebas)):
     distancias = obtenerDistancias(entrenamiento, pruebas[i])
